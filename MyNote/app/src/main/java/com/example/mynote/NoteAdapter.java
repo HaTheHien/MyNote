@@ -1,5 +1,6 @@
 package com.example.mynote;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         super(context,0,notes);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -26,10 +28,12 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
         }
         // Lookup view for data population
-        TextView tvText = (TextView) convertView.findViewById(R.id.tvText);
+        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-        tvText.setText(note.getText());
+        TextView tvTag = (TextView) convertView.findViewById(R.id.tvTag);
+        tvTitle.setText(note.getTitle());
         tvDate.setText(note.getDate());
+        tvTag.setText("Tag:"+note.getTag());
         return convertView;
     }
 }

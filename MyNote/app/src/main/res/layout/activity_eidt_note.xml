@@ -14,7 +14,6 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="text"
         app:layout_constraintStart_toEndOf="@+id/title_label"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
@@ -52,7 +51,6 @@
         android:layout_height="33dp"
         android:layout_marginStart="15dp"
         android:inputType="textPersonName"
-        android:text="ExTag"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/tagLabel"
         app:layout_constraintStart_toEndOf="@+id/tagLabel"
