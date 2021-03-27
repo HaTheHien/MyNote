@@ -35,32 +35,28 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="5dp" />
 
-    <TextView
-        android:id="@+id/tagLabel"
-        android:layout_width="46dp"
+    <LinearLayout
+        android:id="@+id/layout_tag"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:text="Tag"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title" >
 
-    <EditText
-        android:id="@+id/tagData"
-        android:layout_width="115dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="15dp"
-        android:inputType="textPersonName"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tagLabel"
-        app:layout_constraintStart_toEndOf="@+id/tagLabel"
-        app:layout_constraintTop_toTopOf="@+id/tagLabel" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_tag_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:focusable="false"
+        android:clickable="false">
+    </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/tagData"
+        app:layout_constraintTop_toBottomOf="@+id/layout_tag"
         tools:layout_editor_absoluteX="141dp">
 
         <com.google.android.material.textfield.TextInputEditText

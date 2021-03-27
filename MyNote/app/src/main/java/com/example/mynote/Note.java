@@ -1,12 +1,13 @@
 package com.example.mynote;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Note {
     Date date;
     private String title = "";
     private String text = "";
-    private String tag = "";
+    private ArrayList<String> tag = null;
 
     public Note(String text,Date date){
         this.text = text;
@@ -17,7 +18,7 @@ public class Note {
         this.title = title;
     }
 
-    public void setTag(String tag) {
+    public void setTag(ArrayList<String> tag) {
         this.tag = tag;
     }
 
@@ -29,7 +30,7 @@ public class Note {
         return date.toString();
     }
 
-    public String getTag() {
+    public ArrayList<String> getTag() {
         return tag;
     }
 

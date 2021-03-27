@@ -14,7 +14,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="title"
+            android:text="@string/title"
+            android:lines="1"
+            android:layout_marginStart="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,19 +24,22 @@
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="text"
+            android:text="@string/text"
             android:textSize="10dp"
+            android:layout_marginStart="5dp"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <TextView
-            android:id="@+id/tvTag"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tag"
-            android:textSize="10dp"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvDate" />
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:focusable="false"
+            android:clickable="false"
+            app:layout_constraintTop_toBottomOf="@id/tvDate">
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

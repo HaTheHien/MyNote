@@ -5,11 +5,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -30,10 +33,16 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-        TextView tvTag = (TextView) convertView.findViewById(R.id.tvTag);
+        RecyclerView tagView = convertView.findViewById(R.id.recycle_view_tag);
+
         tvTitle.setText(note.getTitle());
         tvDate.setText(note.getDate());
-        tvTag.setText("Tag:"+note.getTag());
+
+        TagAdapter tagAdapter = new TagAdapter(note.getTag());
+        tagView.setAdapter(tagAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager.setItemPrefetchEnabled(false);
+        tagView.setLayoutManager(layoutManager);
         return convertView;
     }
 }
