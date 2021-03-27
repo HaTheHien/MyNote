@@ -38,12 +38,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         )
-        gridView.setOnItemClickListener(AdapterView.OnItemClickListener() { adapterView, view, i, l ->
-            val intent = Intent(applicationContext, EditNoteActivity::class.java)
-            intent.putExtra("noteId", i)
-            startActivity(intent)
-        }
-        )
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {

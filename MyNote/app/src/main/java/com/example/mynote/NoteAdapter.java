@@ -2,10 +2,10 @@ package com.example.mynote;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -40,9 +40,17 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         TagAdapter tagAdapter = new TagAdapter(note.getTag());
         tagView.setAdapter(tagAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setItemPrefetchEnabled(false);
         tagView.setLayoutManager(layoutManager);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), EditNoteActivity.class);
+                intent.putExtra("noteId", position);
+                parent.getContext().startActivity(intent);
+            }
+        });
         return convertView;
     }
 }
