@@ -36,8 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal"
-            android:focusable="false"
-            android:clickable="false"
             app:layout_constraintTop_toBottomOf="@id/tvDate">
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.mynote;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -31,8 +32,8 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
         }
         // Lookup view for data population
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-        TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
+        TextView tvTitle = convertView.findViewById(R.id.tvTitle);
+        TextView tvDate = convertView.findViewById(R.id.tvDate);
         RecyclerView tagView = convertView.findViewById(R.id.recycle_view_tag);
 
         tvTitle.setText(note.getTitle());
@@ -48,7 +49,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), EditNoteActivity.class);
                 intent.putExtra("noteId", position);
-                parent.getContext().startActivity(intent);
+                ((Activity)parent.getContext()).startActivityForResult(intent,1);
             }
         });
         return convertView;

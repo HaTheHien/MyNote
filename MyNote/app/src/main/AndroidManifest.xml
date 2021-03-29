@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyNote">
-        <activity android:name=".EditNoteActivity"
-            android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".EditTagActivity"
+            android:parentActivityName=".EditNoteActivity">
         </activity>
+        <activity
+            android:name=".EditNoteActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

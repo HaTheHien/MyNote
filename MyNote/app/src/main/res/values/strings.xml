@@ -3,4 +3,6 @@
     <string name="title">title</string>
     <string name="text">text</string>
     <string name="edittag">edit tag</string>
+    <string name="edit_tag">Edit tag</string>
+    <string name="add_tag">add_tag</string>
 </resources>

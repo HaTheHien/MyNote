@@ -7,7 +7,7 @@ public class Note {
     Date date;
     private String title = "";
     private String text = "";
-    private ArrayList<String> tag = null;
+    public ArrayList<String> tag = null;
 
     public Note(String text,Date date){
         this.text = text;
