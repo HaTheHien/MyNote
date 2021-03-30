@@ -46,7 +46,6 @@ public class TagEditAdapter extends ArrayAdapter<String> {
         // Lookup view for data population
         TextView tvText = convertView.findViewById(R.id.textViewTag);
         CheckBox tvCheckBox = convertView.findViewById(R.id.checkBox);
-        ImageButton tvRemove = convertView.findViewById(R.id.delete);
 
         tvText.setText(tag);
         tvCheckBox.setChecked(notes.get(noteId).getTag().contains(tag));
@@ -67,13 +66,6 @@ public class TagEditAdapter extends ArrayAdapter<String> {
             Gson gson = new Gson();
             String json = gson.toJson(notes);
             mPrefs.edit().putString("notes", json).apply();
-        });
-        tvRemove.setOnClickListener(v -> {
-            allTag.remove(position);
-            SharedPreferences mPrefs = context.getSharedPreferences("allTag",MODE_PRIVATE);
-            Gson gson = new Gson();
-            String json = gson.toJson(allTag);
-            mPrefs.edit().putString("allTag", json).apply();
         });
         return convertView;
     }

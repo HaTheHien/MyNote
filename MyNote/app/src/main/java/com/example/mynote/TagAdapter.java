@@ -30,6 +30,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
             return textView;
         }
     }
+
+    View.OnClickListener clickListener = null;
+    public TagAdapter(ArrayList<String> dataSet, View.OnClickListener clickListener) {
+        localDataSet = dataSet;
+        this.clickListener = clickListener;
+    }
     public TagAdapter(ArrayList<String> dataSet) {
         localDataSet = dataSet;
     }
@@ -47,6 +53,9 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.getTextView().setText(localDataSet.get(position));
+        if (clickListener != null) {
+            viewHolder.itemView.setOnClickListener(clickListener);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

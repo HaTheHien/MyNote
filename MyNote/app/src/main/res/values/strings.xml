@@ -8,4 +8,5 @@
     <string name="search">Search</string>
     <string name="add_note">Add_note</string>
     <string name="style">Style</string>
+    <string name="remove_tag">Remove_tag</string>
 </resources>

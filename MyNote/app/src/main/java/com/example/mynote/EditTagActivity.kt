@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginLeft
 import com.example.mynote.MyApplication.Companion.notes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -61,6 +62,7 @@ class EditTagActivity : AppCompatActivity() {
                 builder.setTitle("Tag name")
 
                 val input = EditText(this)
+                input.setSingleLine()
                 builder.setView(input)
 
                 builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->

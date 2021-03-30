@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,14 +45,21 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setItemPrefetchEnabled(false);
         tagView.setLayoutManager(layoutManager);
-        convertView.setOnClickListener(new View.OnClickListener() {
+        //ConstraintLayout constraintLayout = convertView.findViewById(R.id.constraint);
+
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), EditNoteActivity.class);
                 intent.putExtra("noteId", position);
                 ((Activity)parent.getContext()).startActivityForResult(intent,1);
             }
-        });
+        };
+
+        convertView.setOnClickListener(clickListener);
+        //tagView.setOnClickListener(clickListener);
+
+
         return convertView;
     }
 }

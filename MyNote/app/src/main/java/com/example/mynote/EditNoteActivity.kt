@@ -21,7 +21,7 @@ import java.util.*
 
 class EditNoteActivity : AppCompatActivity() {
     private var titleView:EditText? = null
-    private var tagView:RecyclerView? = null
+    private lateinit var tagView:RecyclerView
     private var dataView:EditText? = null
     private var dateView:TextView? = null
     private var pressedTime: Long = 0
@@ -38,6 +38,7 @@ class EditNoteActivity : AppCompatActivity() {
         dataView = findViewById(R.id.data)
         dateView = findViewById(R.id.date)
         tagView = findViewById(R.id.recycle_view_tag_edit)
+
         val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
         val gson = Gson()
         var json: String? = sharedPreferences.getString("notes", null)
@@ -62,7 +63,11 @@ class EditNoteActivity : AppCompatActivity() {
             json = gson.toJson(notes)
             sharedPreferences.edit().putString("notes", json).apply()
         }
-        tagView!!.adapter = TagAdapter(notes[noteId].tag)
+        tagView!!.adapter = TagAdapter(notes[noteId].tag) { v ->
+            val intent = Intent(applicationContext, EditTagActivity::class.java)
+            intent.putExtra("noteId", noteId)
+            startActivityForResult(intent, 2)
+        }
         tagView!!.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
         titleView!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
@@ -93,6 +98,17 @@ class EditNoteActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, EditTagActivity::class.java)
                 intent.putExtra("noteId", noteId)
                 startActivityForResult(intent, 2)
+                true
+            }
+            R.id.remove_tag ->{
+                notes.removeAt(noteId)
+                val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
+                val gson = Gson()
+                val json = gson.toJson(notes)
+                sharedPreferences.edit().putString("notes", json).apply()
+                val returnIntent = intent
+                setResult(RESULT_OK, returnIntent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
