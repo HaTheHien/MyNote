@@ -9,4 +9,7 @@
     <string name="add_note">Add_note</string>
     <string name="style">Style</string>
     <string name="remove_tag">Remove_tag</string>
+    <string name="by_data">search by data</string>
+    <string name="by_tag">search by tag</string>
+    <string name="tag">tag</string>
 </resources>

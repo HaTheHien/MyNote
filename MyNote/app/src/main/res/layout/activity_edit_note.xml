@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditNoteActivity">
+    tools:context=".EditNoteActivity"
+    android:id="@+id/activity_root_view"
+    android:animateLayoutChanges="true">
 
     <EditText
         android:id="@+id/title"
@@ -33,7 +35,8 @@
         android:layout_height="wrap_content"
         android:text="date"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="5dp"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/layout_tag"
@@ -66,5 +69,16 @@
             android:hint="note"
             android:singleLine="false" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/tab_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:text="@string/tag"
+        android:onClick="onClickTab"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

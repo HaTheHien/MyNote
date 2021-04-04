@@ -20,20 +20,19 @@
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="120dp"
-        android:gravity="center"
         android:horizontalSpacing="8dp"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"
         android:verticalSpacing="8dp"
+        android:numColumns="auto_fit"
         android:visibility="gone">
     </GridView>
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNote"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#00FFFFFF"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
         android:contentDescription="@string/add_note"
         android:onClick="onAddNewNote"
         android:src="@android:drawable/ic_input_add"

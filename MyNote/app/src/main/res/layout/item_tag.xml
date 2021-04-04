@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.chip.Chip
+<com.google.android.material.chip.Chip xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tagChip"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_heightRecycleView"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:text="text"
-    android:textSize="10dp"
-    style="@style/TextAppearance.AppCompat.Widget.Switch">
+    android:text="@string/text"
+    android:textSize="10sp"
+    style="@style/TextAppearance.AppCompat.Widget.Switch"
+    tools:ignore="SmallSp">
 
 </com.google.android.material.chip.Chip>

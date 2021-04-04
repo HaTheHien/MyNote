@@ -14,6 +14,14 @@ public class Note {
         this.date = date;
     }
 
+    public Note(Note a)
+    {
+        date = a.date;
+        title = a.title;
+        text = a.text;
+        tag = new ArrayList<String>(a.tag);
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

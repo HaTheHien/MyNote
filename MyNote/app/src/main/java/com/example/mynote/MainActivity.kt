@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.GridView
 import android.widget.ListView
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -16,31 +17,97 @@ import com.example.mynote.MyApplication.Companion.notes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
     private var listView:ListView? = null
     private var gridView:GridView? = null
+    private var searchView:SearchView? = null
+    private var configSearch:MenuItem? = null
     private var adapter:NoteAdapter? = null
     private var curStyle:String? = null
-    private var setStyleView:MenuItem? = null
     private var menu:Menu? = null
+    private var mode:Int = 1
+    private var noteSearch:ArrayList<Note>? = null
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
         this.menu = menu
         if (curStyle.isNullOrEmpty() || curStyle == "listView"){
-            menu!!.getItem(1).icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_baseline_format_list_bulleted_24,null)
+            menu!!.findItem(R.id.style_view).icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_format_list_bulleted_24, null)
             curStyle = "listView"
             listView!!.visibility = View.VISIBLE
             gridView!!.visibility = View.GONE
         }
         else{
-            menu!!.getItem(1).icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_baseline_grid_view_24,null)
+            menu!!.findItem(R.id.style_view).icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_grid_view_24, null)
             curStyle = "gridView"
             listView!!.visibility = View.GONE
             gridView!!.visibility = View.VISIBLE
         }
+
+        val search = menu.findItem(R.id.app_bar_search)
+        searchView = search.actionView as SearchView
+        configSearch = menu.findItem(R.id.spinner_search)
+        configSearch!!.setOnMenuItemClickListener {
+            if (mode == 1) {
+                configSearch!!.title = getString(R.string.by_data)
+                mode = 0
+            }
+            else {
+                configSearch!!.title = getString(R.string.by_tag)
+                mode = 1
+            }
+            true
+        }
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                noteSearch = ArrayList<Note>()
+                if (query!!.isEmpty())
+                {
+                    configSearch!!.isEnabled = true
+                    val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
+                    val gson = Gson()
+                    val json: String? = sharedPreferences.getString("notes", null)
+                    json?.let {
+                        val type = object : TypeToken<ArrayList<Note?>?>() {}.type
+                        notes = gson.fromJson(json, type)
+                    }
+                    adapter!!.clear()
+                    adapter!!.addAll(notes)
+                    adapter!!.notifyDataSetChanged()
+                    return false
+                }
+                configSearch!!.isEnabled = false
+                if (mode == 1) {
+                    for (note: Note in notes) {
+                        if (note.title.contains(query as CharSequence) || note.text.contains(query as CharSequence)) {
+                            noteSearch!!.add(note)
+                        }
+                    }
+                }
+                else
+                {
+                    for (note: Note in notes) {
+                        for (tag:String in note.tag)
+                            if (tag.contains(query as CharSequence) || tag.contains(query as CharSequence)) {
+                                noteSearch!!.add(note)
+                                break
+                            }
+                    }
+                }
+                adapter!!.clear()
+                adapter!!.addAll(noteSearch!!)
+                adapter!!.notifyDataSetChanged()
+                return false
+            }
+        })
+
         return true
     }
 
@@ -62,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         adapter = NoteAdapter(this, notes)
         listView!!.adapter = adapter
         gridView!!.adapter = adapter
+
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
@@ -70,16 +138,15 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.style_view -> {
-                if (curStyle == "listView" || curStyle == null){
-                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this,R.drawable.ic_baseline_format_list_bulleted_24)
+                if (curStyle == "listView" || curStyle == null) {
+                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_format_list_bulleted_24)
                     curStyle = "gridView"
                     listView!!.visibility = View.GONE
                     gridView!!.visibility = View.VISIBLE
                     val sharedPreferences = applicationContext.getSharedPreferences("style", MODE_PRIVATE)
                     sharedPreferences.edit().putString("style", curStyle).apply()
-                }
-                else{
-                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this,R.drawable.ic_baseline_grid_view_24)
+                } else {
+                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_grid_view_24)
                     curStyle = "listView"
                     listView!!.visibility = View.VISIBLE
                     gridView!!.visibility = View.GONE

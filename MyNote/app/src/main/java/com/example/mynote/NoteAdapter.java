@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
+    ArrayList<Note> notes = null;
     public NoteAdapter(Context context, ArrayList<Note> notes){
         super(context,0,notes);
+        this.notes = notes;
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,7 +55,15 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), EditNoteActivity.class);
-                intent.putExtra("noteId", position);
+                int nodePosition = -1;
+                for (int i = 0; i < notes.size(); i++) {
+                    if (notes.get(i).date.compareTo(note.date) == 0)
+                    {
+                        nodePosition = i;
+                        break;
+                    }
+                }
+                intent.putExtra("noteId", nodePosition);
                 ((Activity)parent.getContext()).startActivityForResult(intent,1);
             }
         };

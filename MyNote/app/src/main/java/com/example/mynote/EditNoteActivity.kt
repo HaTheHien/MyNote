@@ -1,14 +1,17 @@
 package com.example.mynote
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +92,21 @@ class EditNoteActivity : AppCompatActivity() {
                 sharedPreferences.edit().putString("notes", json).apply()
             }
         })
+        val activityRootView = findViewById<View>(R.id.activity_root_view)
+        dataView!!.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                val heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+                if (heightDiff > dpToPx(baseContext, 200)) { // if more than 200 dp, it's probably a keyboard...
+                    findViewById<View>(R.id.tab_button).visibility = View.VISIBLE
+                }
+            } else {
+                findViewById<View>(R.id.tab_button).visibility = View.GONE
+            }
+        }
+    }
+    fun dpToPx(context: Context, valueInDp: Int): Float {
+        val metrics: DisplayMetrics = context.getResources().getDisplayMetrics()
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp.toFloat(), metrics)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -100,7 +118,7 @@ class EditNoteActivity : AppCompatActivity() {
                 startActivityForResult(intent, 2)
                 true
             }
-            R.id.remove_tag ->{
+            R.id.remove_tag -> {
                 notes.removeAt(noteId)
                 val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
                 val gson = Gson()
@@ -130,5 +148,11 @@ class EditNoteActivity : AppCompatActivity() {
             }
         }
         tagView!!.adapter!!.notifyDataSetChanged()
+    }
+
+    fun onClickTab(view: View){
+        val curCusor = dataView!!.selectionEnd
+        dataView!!.text = dataView!!.text.insert(curCusor,"     ")
+        dataView!!.setSelection(curCusor + 5)
     }
 }
