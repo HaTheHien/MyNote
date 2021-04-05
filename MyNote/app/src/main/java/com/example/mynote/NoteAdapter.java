@@ -24,7 +24,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     ArrayList<Note> notes = null;
     public NoteAdapter(Context context, ArrayList<Note> notes){
         super(context,0,notes);
-        this.notes = notes;
+        this.notes = new ArrayList<Note>(notes);
     }
 
     @SuppressLint("SetTextI18n")
@@ -49,7 +49,6 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setItemPrefetchEnabled(false);
         tagView.setLayoutManager(layoutManager);
-        //ConstraintLayout constraintLayout = convertView.findViewById(R.id.constraint);
 
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
@@ -69,9 +68,6 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         };
 
         convertView.setOnClickListener(clickListener);
-        //tagView.setOnClickListener(clickListener);
-
-
         return convertView;
     }
 }

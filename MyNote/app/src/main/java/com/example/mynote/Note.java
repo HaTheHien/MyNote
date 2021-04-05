@@ -16,10 +16,15 @@ public class Note {
 
     public Note(Note a)
     {
-        date = a.date;
-        title = a.title;
-        text = a.text;
-        tag = new ArrayList<String>(a.tag);
+        this.date = a.date;
+        this.title = a.title;
+        this.text = a.text;
+        this.tag = new ArrayList<String>(a.tag);
+    }
+
+    public Note clone(){
+        Note temp = new Note(this);
+        return temp;
     }
 
     public void setTitle(String title) {

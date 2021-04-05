@@ -67,20 +67,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
+                val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
+                val gson = Gson()
+                val json: String? = sharedPreferences.getString("notes", null)
+                json?.let {
+                    val type = object : TypeToken<ArrayList<Note?>?>() {}.type
+                    notes = gson.fromJson(json, type)
+                }
                 noteSearch = ArrayList<Note>()
                 if (query!!.isEmpty())
                 {
-                    configSearch!!.isEnabled = true
-                    val sharedPreferences = applicationContext.getSharedPreferences("notes", MODE_PRIVATE)
-                    val gson = Gson()
-                    val json: String? = sharedPreferences.getString("notes", null)
-                    json?.let {
-                        val type = object : TypeToken<ArrayList<Note?>?>() {}.type
-                        notes = gson.fromJson(json, type)
+                    for (note: Note in notes) {
+                        noteSearch!!.add(note)
                     }
+                    configSearch!!.isEnabled = true
                     adapter!!.clear()
-                    adapter!!.addAll(notes)
-                    adapter!!.notifyDataSetChanged()
+                    adapter!!.addAll(noteSearch!!)
                     return false
                 }
                 configSearch!!.isEnabled = false
@@ -103,7 +105,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 adapter!!.clear()
                 adapter!!.addAll(noteSearch!!)
-                adapter!!.notifyDataSetChanged()
                 return false
             }
         })
