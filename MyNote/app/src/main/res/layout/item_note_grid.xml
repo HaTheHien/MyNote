@@ -38,7 +38,7 @@
 
             android:id="@+id/recycle_view_tag"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_heightRecycleView"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tvDate"/>

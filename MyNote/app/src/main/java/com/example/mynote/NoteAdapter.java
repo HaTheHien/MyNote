@@ -22,6 +22,7 @@ import java.util.List;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
     ArrayList<Note> notes = null;
+    int modeView = 1;
     public NoteAdapter(Context context, ArrayList<Note> notes){
         super(context,0,notes);
         this.notes = new ArrayList<Note>(notes);
@@ -33,9 +34,10 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Note note = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
+        if (modeView == 1)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
-        }
+        else
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note_grid, parent, false);
         // Lookup view for data population
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         TextView tvDate = convertView.findViewById(R.id.tvDate);

@@ -35,21 +35,23 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         this.menu = menu
         if (curStyle.isNullOrEmpty() || curStyle == "listView"){
-            menu!!.findItem(R.id.style_view).icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_format_list_bulleted_24, null)
+            menu!!.findItem(R.id.style_view).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_grid_view_24)
             curStyle = "listView"
             listView!!.visibility = View.VISIBLE
             gridView!!.visibility = View.GONE
+            adapter!!.modeView = 1
         }
         else{
-            menu!!.findItem(R.id.style_view).icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_grid_view_24, null)
+            menu!!.findItem(R.id.style_view).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_format_list_bulleted_24)
             curStyle = "gridView"
             listView!!.visibility = View.GONE
             gridView!!.visibility = View.VISIBLE
+            adapter!!.modeView = 0
         }
 
-        val search = menu.findItem(R.id.app_bar_search)
+        val search = menu!!.findItem(R.id.app_bar_search)
         searchView = search.actionView as SearchView
-        configSearch = menu.findItem(R.id.spinner_search)
+        configSearch = menu!!.findItem(R.id.spinner_search)
         configSearch!!.setOnMenuItemClickListener {
             if (mode == 1) {
                 configSearch!!.title = getString(R.string.by_data)
@@ -140,17 +142,19 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.style_view -> {
                 if (curStyle == "listView" || curStyle == null) {
-                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_format_list_bulleted_24)
+                    menu!!.findItem(R.id.style_view).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_format_list_bulleted_24)
                     curStyle = "gridView"
                     listView!!.visibility = View.GONE
                     gridView!!.visibility = View.VISIBLE
+                    adapter!!.modeView = 0
                     val sharedPreferences = applicationContext.getSharedPreferences("style", MODE_PRIVATE)
                     sharedPreferences.edit().putString("style", curStyle).apply()
                 } else {
-                    menu!!.getItem(1).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_grid_view_24)
+                    menu!!.findItem(R.id.style_view).icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_grid_view_24)
                     curStyle = "listView"
                     listView!!.visibility = View.VISIBLE
                     gridView!!.visibility = View.GONE
+                    adapter!!.modeView = 1
                 }
                 true
             }
